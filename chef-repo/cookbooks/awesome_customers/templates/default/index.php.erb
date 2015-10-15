@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customers</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-family: sans-serif;
+        padding: 5px;
+      }
+      table tr:nth-child(even) td {
+        background-color: #95c7ea;
+      }
+    </style>
+</head>
+<body>
+<?php
+$servername = "<%= node['awesome_customers']['database']['host'] %>";
+$username = "<%= node['awesome_customers']['database']['app']['username'] %>";
+$password = "<%= @database_password %>";
+$dbname = "<%= node['awesome_customers']['database']['dbname'] %>";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Perform SQL query
+$sql = "SELECT * FROM customers";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table>\n";
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+      echo "\t<tr>\n";
+      foreach ($row as $col_value) {
+          print "\t\t<td>$col_value</td>\n";
+      }
+      echo "\t</tr>\n";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+
+// Close connection
+$conn->close();
+?>
+</body>
+</html>

@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["private_network", {ip: "192.168.33.33"}]
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.6
+
+suites:
+  - name: default
+    data_bags_path: "../../data_bags"
+    run_list:
+      - recipe[awesome_customers::default]
+    provisioner:
+      encrypted_data_bag_secret_key_path: /tmp/encrypted_data_bag_secret
+    attributes:
+      awesome_customers:
+        passwords:
+          secret_path: '/tmp/kitchen/encrypted_data_bag_secret'

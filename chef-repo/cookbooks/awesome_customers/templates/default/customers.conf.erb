@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+  ServerName <%= node['hostname'] %>
+  ServerAdmin 'ops@example.com'
+
+  DocumentRoot <%= node['awesome_customers']['document_root'] %>
+  <Directory />
+          Options FollowSymLinks
+          AllowOverride None
+  </Directory>
+  <Directory <%= node['awesome_customers']['document_root'] %> >
+          Options Indexes FollowSymLinks MultiViews
+          AllowOverride None
+          Order allow,deny
+          allow from all
+  </Directory>
+
+  ErrorLog /var/log/httpd/error.log
+
+  LogLevel warn
+
+  CustomLog /var/log/httpd/access.log combined
+  ServerSignature Off
+
+  AddType application/x-httpd-php .php
+  AddType application/x-httpd-php-source .phps
+  DirectoryIndex index.php index.html
+</VirtualHost>
