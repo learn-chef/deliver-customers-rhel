@@ -17,6 +17,5 @@ describe 'awesome_customers::default' do
       # The selinux cookbook raises this error.
       expect { chef_run }.to raise_error(RuntimeError, 'chefspec not supported!')
     end
-
   end
 end
