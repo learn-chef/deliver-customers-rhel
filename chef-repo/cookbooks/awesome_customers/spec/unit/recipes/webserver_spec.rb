@@ -36,8 +36,8 @@ describe 'awesome_customers::webserver' do
     it "creates httpd_service['customers']" do
       expect(chef_run).to create_httpd_service('customers')
         .with(
-            mpm: 'prefork'
-          )
+          mpm: 'prefork'
+        )
     end
 
     it "creates httpd_config['customers']" do
