@@ -14,7 +14,7 @@ describe 'awesome_customers::firewall' do
     end
 
     it 'converges successfully' do
-      chef_run # This should not raise an error
+      expect { chef_run }.to_not raise_error
     end
   end
 end

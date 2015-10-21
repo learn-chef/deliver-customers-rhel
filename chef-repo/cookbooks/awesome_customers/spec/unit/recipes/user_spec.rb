@@ -7,16 +7,14 @@
 require 'spec_helper'
 
 describe 'awesome_customers::user' do
-
   context 'When all attributes are default, on an unspecified platform' do
-
     let(:chef_run) do
       runner = ChefSpec::ServerRunner.new
       runner.converge(described_recipe)
     end
 
     it 'converges successfully' do
-      chef_run # This should not raise an error
+      expect { chef_run }.to_not raise_error
     end
 
   end
