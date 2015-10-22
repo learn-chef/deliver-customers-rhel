@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Customers</title>
-    <style>
-      table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-family: sans-serif;
-        padding: 5px;
-      }
-      table tr:nth-child(even) td {
-        background-color: #95c7ea;
-      }
-    </style>
-</head>
-<body>
 <?php
 $servername = "<%= node['awesome_customers']['database']['host'] %>";
 $username = "<%= node['awesome_customers']['database']['app']['username'] %>";
@@ -33,23 +16,40 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM customers";
 $result = $conn->query($sql);
 
+// Generate a JSON string that holds the name and location of each customer
+$places .= '\'{"type": "FeatureCollection","features": [';
+
 if ($result->num_rows > 0) {
-    echo "<table>\n";
-    // Output data of each row
-    while($row = $result->fetch_assoc()) {
-      echo "\t<tr>\n";
-      foreach ($row as $col_value) {
-          print "\t\t<td>$col_value</td>\n";
-      }
-      echo "\t</tr>\n";
-    }
-    echo "</table>";
-} else {
-    echo "0 results";
+  // Append data from each row
+  $comma = "";
+  while($row = $result->fetch_assoc()) {
+    $places .= $comma.'{ "type": "Feature", "properties": { "name": "'.$row['first_name']." ".$row['last_name'].'" }, "geometry": { "type": "Point", "coordinates": [ '.$row['longitude'].', '.$row['latitude'].' ] } }';
+    $comma = ",";
+  }
 }
+
+$places .= ']}\'';
 
 // Close connection
 $conn->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customers</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+  <script src="http://d3js.org/topojson.v0.min.js"></script>
+  <script src="vis.js"></script>
+  <script type="text/javascript">
+    function show_customers() {
+      create_map(JSON.parse(<?php echo $places; ?>));
+    }
+    window.onload = show_customers;
+  </script>
 </body>
 </html>

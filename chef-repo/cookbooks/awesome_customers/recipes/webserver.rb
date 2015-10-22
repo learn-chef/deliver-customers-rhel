@@ -36,6 +36,16 @@ template "#{node['awesome_customers']['document_root']}/index.php" do
   )
 end
 
+# Write the CSS, JavaScript, and JSON data files.
+%w(styles.css vis.js world-110m.json).each do |f|
+  cookbook_file File.join(node['awesome_customers']['document_root'], f) do
+    source f
+    mode '0644'
+    owner node['awesome_customers']['user']
+    group node['awesome_customers']['group']
+  end
+end
+
 # Install the mod_php5 Apache module.
 httpd_module 'php' do
   instance 'customers'
