@@ -75,3 +75,4 @@ end
 execute 'add sample data to database' do
   command "mysql -h #{node['awesome_customers']['database']['host']} -u #{node['awesome_customers']['database']['app']['username']} -p#{user_password_data_bag_item['password']} -D #{node['awesome_customers']['database']['dbname']} < #{node['awesome_customers']['database']['data_file']}"
   not_if "mysql -h #{node['awesome_customers']['database']['host']} -u #{node['awesome_customers']['database']['app']['username']} -p#{user_password_data_bag_item['password']} -D #{node['awesome_customers']['database']['dbname']} -e 'select count(*) from customers where (first_name = \"A.\" AND last_name = \"Sample\");' | grep '[1-9][0-9]*'"
+end
