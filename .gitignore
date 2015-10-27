@@ -1,10 +1,7 @@
-.vagrant
-/cookbooks
+.rake_test_cache
 
-# Bundler
-bin/*
-.bundle/*
-
-.kitchen/
-.kitchen.local.yml
-.chef
+###
+# Ignore Chef key files and secrets
+###
+.chef/*.pem
+.chef/encrypted_data_bag_secret
