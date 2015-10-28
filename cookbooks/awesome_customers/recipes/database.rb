@@ -49,6 +49,22 @@ mysql_database_user node['awesome_customers']['database']['app']['username'] do
   action [:create, :grant]
 end
 
+# Write drop file to filesystem.
+cookbook_file node['awesome_customers']['database']['drop_file'] do
+  source 'drop-tables.sql'
+  owner 'root'
+  group 'root'
+  mode '0600'
+end
+
+# Drop the customers table if it doesn't include location data.
+# We drop the table for illustration purposes.
+# In practice, you might alter the table to include the additional columns.
+execute 'drop old table' do
+  command "mysql -h #{node['awesome_customers']['database']['host']} -u #{node['awesome_customers']['database']['app']['username']} -p#{user_password_data_bag_item['password']} -D #{node['awesome_customers']['database']['dbname']} < #{node['awesome_customers']['database']['drop_file']}"
+  not_if "mysql -h #{node['awesome_customers']['database']['host']} -u #{node['awesome_customers']['database']['app']['username']} -p#{user_password_data_bag_item['password']} -D #{node['awesome_customers']['database']['dbname']} -e 'describe customers;' | grep 'latitude'"
+end
+
 # Write schema seed file to filesystem.
 cookbook_file node['awesome_customers']['database']['seed_file'] do
   source 'create-tables.sql'

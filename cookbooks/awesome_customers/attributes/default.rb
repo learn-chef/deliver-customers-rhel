@@ -13,5 +13,6 @@ default['awesome_customers']['database']['username'] = 'root'
 
 default['awesome_customers']['database']['app']['username'] = 'db_admin'
 
+default['awesome_customers']['database']['drop_file'] = '/tmp/drop-tables.sql'
 default['awesome_customers']['database']['seed_file'] = '/tmp/create-tables.sql'
 default['awesome_customers']['database']['data_file'] = '/tmp/add-sample-data.sql'
