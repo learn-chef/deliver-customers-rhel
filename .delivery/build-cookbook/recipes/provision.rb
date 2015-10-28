@@ -37,6 +37,8 @@ end
 project = node['delivery']['change']['project'] # for example, 'deliver-customers-rhel'
 stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'union'
 driver = node[project][stage]['driver'] # for example, 'aws' or 'ssh'
+region = node[project][stage][driver]['config']['region'] # for example, 'us-west-2'
+profile = node[project][stage][driver]['config']['profile'] # for example, 'default'
 
 # Perform driver-specific initialization, such as loading the appropriate library.
 # For learning purposes, we'll do that directly in this recipe.
