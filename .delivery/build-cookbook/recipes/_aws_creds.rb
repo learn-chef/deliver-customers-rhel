@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: build-cookbook
-# Recipe:: _aws_creds.rb
+# Recipe:: _aws_creds
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 # Switch from using an in-memory Chef server to Chef Delivery's Chef server.
