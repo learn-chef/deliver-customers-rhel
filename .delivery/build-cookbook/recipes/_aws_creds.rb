@@ -6,9 +6,10 @@
 # Switch from using an in-memory Chef server to Chef Delivery's Chef server.
 Chef_Delivery::ClientHelper.enter_client_mode_as_delivery
 
-# These variables define the current project name and Chef Delivery stage.
+# Read common configuration options from node attributes so that we can later access them more easily.
 project = node['delivery']['change']['project'] # for example, 'deliver-customers-rhel'
 stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'union'
+driver = node[project][stage]['driver'] # for example, 'aws' or 'ssh'
 region = node[project][stage][driver]['config']['region'] # for example, 'us-west-2'
 profile = node[project][stage][driver]['config']['profile'] # for example, 'default'
 
