@@ -6,7 +6,8 @@
 include_recipe 'delivery-truck::provision'
 include_recipe 'chef-sugar::default'
 
-Chef_Delivery::ClientHelper.enter_client_mode_as_delivery
+chef_server = DeliverySugar::ChefServer.new
+chef_server.load_server_config
 
 # Decrypt the encryption key that decrypts the database passwords and save that file to disk.
 database_passwords_key = encrypted_data_bag_item_for_environment('provisioning-data', 'database_passwords_key')
