@@ -25,6 +25,9 @@ with_server_config do
   # Compute the path to the credentials file.
   aws_config_filename = File.join(node['delivery']['workspace']['cache'], node['delivery']['change']['project'], 'aws_config')
 
+  # Ensure parent directory exists.
+  directory File.join(node['delivery']['workspace']['cache'], node['delivery']['change']['project'])
+
   # Write the AWS credentials to disk.
   # Alternatively, you can use the template resource.
   file aws_config_filename do
