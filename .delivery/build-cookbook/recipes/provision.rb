@@ -34,7 +34,7 @@ file File.join(ssh_private_key_path, "#{ssh_key['name']}.pem")  do
 end
 
 # These variables define the current project name, Chef Delivery stage, and the Chef provisioning driver for the current stage.
-project = node['delivery']['change']['project'] # for example, deliver-customers-rhel
+project = node['delivery']['change']['project'] # for example, 'deliver-customers-rhel'
 stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'union'
 driver = node[project][stage]['driver'] # for example, 'aws' or 'ssh'
 
