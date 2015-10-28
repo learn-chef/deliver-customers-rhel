@@ -25,8 +25,7 @@ aws_secret_access_key = #{aws_creds['secret_access_key']}
 EOF
 
 # Compute the path to the credentials file.
-# We write it to the root workspace directory on the build node.
-aws_config_filename = File.join(node['delivery']['workspace']['root'], 'aws_config')
+aws_config_filename = File.join(node['delivery']['workspace']['cache'], node['delivery']['change']['project'], 'aws_config')
 
 # Write the AWS credentials to disk.
 # Alternatively, you can use the template resource.
