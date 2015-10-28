@@ -1,1 +1,1 @@
-DROP TABLE customers;
+DROP TABLE IF EXISTS customers;
