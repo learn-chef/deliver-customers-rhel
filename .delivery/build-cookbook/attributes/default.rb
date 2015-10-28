@@ -1,13 +1,13 @@
 default['delivery']['config']['delivery-truck']['publish']['chef_server'] = true
 
-default['build-a-delivery-pipeline-rhel']['run_list'] = ['recipe[awesome_customers::default]']
+default['deliver-customers-rhel']['run_list'] = ['recipe[awesome_customers::default]']
 
 %w(acceptance union rehearsal delivered).each do |stage|
-  default['build-a-delivery-pipeline-rhel'][stage]['driver'] = 'aws'
+  default['deliver-customers-rhel'][stage]['driver'] = 'aws'
 end
 
 %w(acceptance union rehearsal delivered).each do |stage|
-  default['build-a-delivery-pipeline-rhel'][stage]['aws']['config'] = {
+  default['deliver-customers-rhel'][stage]['aws']['config'] = {
     region: 'us-west-2',
     profile: 'default',
     machine_options: {
@@ -30,7 +30,7 @@ end
   }
 end
 
-default['build-a-delivery-pipeline-rhel']['acceptance']['ssh']['config'] = {
+default['deliver-customers-rhel']['acceptance']['ssh']['config'] = {
   machine_options: {
     transport_options: {
       ip_address: '52.27.142.7',
@@ -45,7 +45,7 @@ default['build-a-delivery-pipeline-rhel']['acceptance']['ssh']['config'] = {
   }
 }
 
-default['build-a-delivery-pipeline-rhel']['union']['ssh']['config'] = {
+default['deliver-customers-rhel']['union']['ssh']['config'] = {
   machine_options: {
     transport_options: {
       ip_address: '52.89.111.13',
@@ -60,7 +60,7 @@ default['build-a-delivery-pipeline-rhel']['union']['ssh']['config'] = {
   }
 }
 
-default['build-a-delivery-pipeline-rhel']['rehearsal']['ssh']['config'] = {
+default['deliver-customers-rhel']['rehearsal']['ssh']['config'] = {
   machine_options: {
     transport_options: {
       ip_address: '52.88.245.86',
@@ -75,7 +75,7 @@ default['build-a-delivery-pipeline-rhel']['rehearsal']['ssh']['config'] = {
   }
 }
 
-default['build-a-delivery-pipeline-rhel']['delivered']['ssh']['config'] = {
+default['deliver-customers-rhel']['delivered']['ssh']['config'] = {
   machine_options: {
     transport_options: {
       ip_address: '54.69.73.21',
