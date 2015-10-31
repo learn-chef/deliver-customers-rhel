@@ -53,8 +53,7 @@ with_chef_server Chef::Config[:chef_server_url],
   verify_api_cert: false
 
 # Ensure that the machine exists, is bootstrapped, has the correct run-list, and is ready to run chef-client.
-machine_name = "#{stage}-#{project}"
-machine machine_name do
+machine "#{stage}-#{project}" do
   action [:setup]
   chef_environment delivery_environment
   converge false
