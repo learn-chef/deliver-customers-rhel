@@ -4,6 +4,7 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 include_recipe 'delivery-truck::deploy'
+include_recipe 'chef-sugar'
 
 load_delivery_chef_config
 
