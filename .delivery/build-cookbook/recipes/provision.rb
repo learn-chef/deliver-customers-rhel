@@ -44,14 +44,6 @@ require "chef/provisioning/aws_driver"
 # Set the AWS driver as the current one.
 with_driver "aws"
 
-# Use the driver-specific method for specifying the SSH private key.
-with_machine_options(
-  bootstrap_options: {
-    key_name: ssh_key['name'],
-    key_path: ssh_private_key_path,
-  }
-)
-
 # Specify information about our Chef server.
 # Chef provisioning uses this information to bootstrap the machine.
 with_chef_server Chef::Config[:chef_server_url],
@@ -68,5 +60,9 @@ machine machine_name do
   converge false
   files '/etc/chef/encrypted_data_bag_secret' => File.join(database_passwords_key_path, 'database_passwords_key')
   run_list node[project]['run_list']
+  add_machine_options bootstrap_options: {
+    key_name: ssh_key['name'],
+    key_path: ssh_private_key_path,
+  }
   add_machine_options node[project][stage]['aws']['config']['machine_options']
 end
