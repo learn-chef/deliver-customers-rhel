@@ -68,5 +68,5 @@ machine machine_name do
   converge false
   files '/etc/chef/encrypted_data_bag_secret' => File.join(database_passwords_key_path, 'database_passwords_key')
   run_list node[project]['run_list']
-  add_machine_options node[project][stage]['ec2']['config']['machine_options']
+  add_machine_options node[project][stage]['aws']['config']['machine_options']
 end
