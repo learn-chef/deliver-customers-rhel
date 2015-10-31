@@ -24,6 +24,9 @@ end
 project = node['delivery']['change']['project'] # for example, 'deliver-customers-rhel'
 stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'union'
 
+# Load AWS credentials.
+include_recipe "#{cookbook_name}::_aws_creds"
+
 # Load the AWS driver.
 require 'chef/provisioning/aws_driver'
 # Set the AWS driver as the current one.
