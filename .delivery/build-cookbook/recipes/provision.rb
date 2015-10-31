@@ -40,9 +40,9 @@ stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'unio
 include_recipe "#{cookbook_name}::_aws_creds"
 
 # Load the AWS driver.
-require "chef/provisioning/aws_driver"
+require 'chef/provisioning/aws_driver'
 # Set the AWS driver as the current one.
-with_driver "aws"
+with_driver 'aws'
 
 # Specify information about our Chef server.
 # Chef provisioning uses this information to bootstrap the machine.
