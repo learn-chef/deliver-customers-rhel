@@ -9,7 +9,7 @@
   "dependencies": [],
   "delivery-truck": {
     "publish": {
-      "chef_server": true,
+      "chef_server": true
     }
   }
 }
