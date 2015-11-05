@@ -33,6 +33,8 @@ describe 'awesome_customers::database' do
       allow(Chef::EncryptedDataBagItem).to receive(:load).with('passwords', 'sql_server_root_password', secret).and_return(server_password_data_bag_item)
 
       stub_command("mysql -h 127.0.0.1 -u db_admin -p -D products -e 'describe customers;'").and_return(0)
+      stub_command("mysql -h 127.0.0.1 -u db_admin -p -D products -e 'describe customers;' | grep 'latitude'").and_return(0)
+      stub_command("mysql -h 127.0.0.1 -u db_admin -p -D products -e 'select count(*) from customers where (first_name = \"A.\" AND last_name = \"Sample\");' | grep '[1-9][0-9]*'").and_return(0)
     end
 
     it 'converges successfully' do
