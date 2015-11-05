@@ -38,3 +38,30 @@ stage = node['delivery']['change']['stage'] # for example, 'acceptance' or 'unio
 
 # Load AWS credentials.
 include_recipe "#{cookbook_name}::_aws_creds"
+
+# Load the AWS driver.
+require 'chef/provisioning/aws_driver'
+# Set the AWS driver as the current one.
+with_driver 'aws'
+
+# Specify information about our Chef server.
+# Chef provisioning uses this information to bootstrap the machine.
+with_chef_server Chef::Config[:chef_server_url],
+  client_name: Chef::Config[:node_name],
+  signing_key_filename: Chef::Config[:client_key],
+  ssl_verify_mode: :verify_none,
+  verify_api_cert: false
+
+# Ensure that the machine exists, is bootstrapped, has the correct run-list, and is ready to run chef-client.
+machine "#{stage}-#{project}" do
+  action [:setup]
+  chef_environment delivery_environment
+  converge false
+  files '/etc/chef/encrypted_data_bag_secret' => File.join(database_passwords_key_path, 'database_passwords_key')
+  run_list node[project]['run_list']
+  add_machine_options bootstrap_options: {
+    key_name: ssh_key['name'],
+    key_path: ssh_private_key_path,
+  }
+  add_machine_options node[project][stage]['aws']['config']['machine_options']
+end
