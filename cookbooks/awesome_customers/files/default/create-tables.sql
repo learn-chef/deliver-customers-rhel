@@ -3,8 +3,7 @@ CREATE TABLE customers(
   PRIMARY KEY(id),
   first_name VARCHAR(64),
   last_name VARCHAR(64),
-  email VARCHAR(64)
+  email VARCHAR(64),
+  latitude DECIMAL(8,6),
+  longitude DECIMAL(9,6)
 );
-
-INSERT INTO customers ( id, first_name, last_name, email ) VALUES ( uuid(), 'Jane', 'Smith', 'jane.smith@example.com' );
-INSERT INTO customers ( id, first_name, last_name, email ) VALUES ( uuid(), 'Dave', 'Richards', 'dave.richards@example.com' );
